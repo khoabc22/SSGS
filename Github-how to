@@ -1,3 +1,21 @@
+git config --global user.name "khaidnguyen"
+git status
+git config --global user.email "xxxxx@yahoo.com"
+git config --list
+git clone https://github.com/khaidnguyen/SSGS.git
+git status
+# Untracked files: ***.sh
+
+git add ***.sh 
+#Initial commit: ***.sh
+
+git commit -m "System Info" ***.sh
+git push -u origin master
+
+Username for 'https://github.com': k**d**en
+Password for 'https://k*a*dn*u**n@github.com': 
+
+
 Khais-MBP:SSGS khainguyendk$ pwd
 /Users/khainguyendk/Desktop/SSGS/SSGS
 Khais-MBP:SSGS khainguyendk$ ls
