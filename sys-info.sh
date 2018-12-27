@@ -24,7 +24,7 @@
  
 #Path the config file to get all expected value
 #. /test/SSGS/box/config.ini
-
+#test github
 
 #Path tools
 toolsPath=(/test/SSGS/tools/)
