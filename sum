@@ -1,7 +1,19 @@
+=========================================================
                 Supermicro Update Manager (SUM)
+=========================================================
+
 Syntax: sum  -i <IPMI IP or hostname> -u <username> -p <password> -c Command(ActivateProductKey, SensorData)
      (For Inband Usage: Don't need IPMI IP)
      
+* For Multiple Systems:
+  sum -l <system list IPMI IP file> [-u <username> -p <password>] -c <Commands> [--file <filename>]
+  Example: sum -l Syslist.txt -u ADMIN -p ADMIN -c GetRaidControllerInfo --file RAID.rom
+  Syslist.txt: 192.168.127.1 
+               ....
+               192.168.127.252
+  
+  
+
 I-  Key Management
 Activate/Query/Clear Product Keys
 
@@ -27,6 +39,12 @@ II- System Checks
   
   3) System Utilization (OOB Only + TAS required)
   sum -c CheckSystemUtilization
+  
+  #Get Multiple system Info
+  sum -l Syslist.txt -u ADMIN -p ADMIN -c CheckSystemUtilization
+  
+  Syslist.txt: 192.168.127.1 - 192.168.127.253
+  
   
   4) Sensor Data
   sum -c CheckSensorData
