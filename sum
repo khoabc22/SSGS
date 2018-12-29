@@ -1,1 +1,114 @@
+                Supermicro Update Manager (SUM)
+Syntax: sum  -i <IPMI IP or hostname> -u <username> -p <password> -c Command(ActivateProductKey, SensorData)
+     (For Inband Usage: Don't need IPMI IP)
+     
+I-  Key Management
+Activate/Query/Clear Product Keys
+
+#Activate Product Keys:
+  1)Collect BMC MAC address, product key and list them in one file. 
+  eg: mymacs.txt
+  example: <IPMI MAC>; <PRODUCT KEY>
+           11:22:33:44:55:66; 1111-2222-3333-4444-5555-6666-7777
+  2) Activate by CLI
+  Syntax: ./sum -c ActivateProductKey --key 1111-2222-3333-4444-5555-6666-7777
+  Linux: a)Inband: ./sum -c ActivateProductKey --key 1111-2222-3333-4444-5555-6666-7777
+         b)OOB: ./sum  -i <IPMI IP or hostname> -u <username> -p <password> -c ActivateProductKey --key 1111-2222-3333-4444-5555-6666-7777
+  Notes: Need to find out command to activate multiple nodes in one command
+
+  3) Activate by SSM Web GUI
+
+II- System Checks
+  1) OOB Support
+  sum -c CheckOOBSupport
+
+  2) Asset Information (OOB Only)
+  sum -c CheckAssetInfo
+  
+  3) System Utilization (OOB Only + TAS required)
+  sum -c CheckSystemUtilization
+  
+  4) Sensor Data
+  sum -c CheckSensorData
+  
+III-  BIOS Management
+  1)  Update BIOS Firmware
+      sum -c UpdateBios --file <Bios file name> Optional < --reboot; --flash_smbios; --preserve_mer; 
+
+  2)  BIOS Information
+      sum -c GetBiosInfo
+      
+  3)  Get Current/Default BIOS Settings
+      sum -c GetCurrentBiosCfg --file <file name> . Example: --file S123456789-CurrentBiosCfg
+      
+  4)  Change BIOS settings
+      sum -c ChangeBiosCfg
+      
+  5)  Get/Change/Edit DMI Information
+      a) Get DMI Info
+      sum -c GetDmiInfo file <file name> . Example: --file S123456789-DmiInfo.txt
+      
+      b) Edit DMI Info
+      sum -c EditDmiInfo --file <DMI.txt> --sshn SYVS --value "1.02"
+      
+      c) Change/Update DMI Info   #The updated new DMI info will take affect only after system is rebooted, powered up
+      sum -c ChangeDmiInfo --file <DMI.txt> [--reboot]
+      
+    Notes: Need to doublecheck if output --file default is "txt file " or "json"
+      
+  6) Set BIOS Admin Password  #The updated new password will take affect only after system is rebooted, powered up
+     sum -c SetBiosPassword --new_password <new password> --confirm_password <new password> [--reboot]
+    
+  IV- BMC Management
+  
+  1)  Update BMC Firmware
+      sum -c UpdateBmc --file SMC_BMC.rom
+      
+  2)  BMC Information
+      sum -c GetBmcInfo 
+      Output: Manage System: <IPMI IP> ; BMC type: X10_ATEN ; BMC version: 01.30
+      
+  3) Get/Change BMC Configuration
+        a) Get BMC Config
+            sum -c GetBmcCfg --file <BmcCfg.xml> [--overwrite]
+        
+        b) Change/Update BMC Config
+            sum -c ChangeBmcCfg --file <BmcCfg.xml> 
+  4) Get/Clear System Event Logs
+        a) Get System Event Logs
+            sum -c GetEventLog --file <EventLog.txt>
+        b) Clear System Event Logs
+            sum -c ClearEventLog
+        Notes: Bios Event Log in BMC will be cleared immediately, Bios Event Log in BIOS will be cleared after rebooted
+        
+        
+  V-  Storage Management (supports only 3108 RAID cards)
+  
+  1- Update RAID Controller Firmware*
+      sum -c UpdateRaidControllerInfo --file RAID.rom --dev_id <Raid Controller Device ID> [--reboot]
+      
+  2- RAID Controller Information*
+      sum -c GetRaidControllerInfo --file RAID.rom
+
+  3- Get/Change RAID Configuration*
+        1- Get Raid Config
+          sum -c GetRaidCfg --file RAIDCFG.xml
+        2- Change/Update Raid Config
+          sum -c ChangeRaidCfg --file RAIDCFG.xml
+          
+  4- Get SATA HDD Information (under onboard AHCI controller)
+      sum -c GetSataInfo
+        Output:  HDD Slot, Model/Serial Name, Firmware version.
+      
+  5- Get NVMe Information
+      sum -c GetNvmeInfo -dev_id 0
+          Output: NVME Info (Slot#; Temperature, Vendor, Serial/Model Number,  
+#CMM Management
+Update CMM Firmware
+CMM Information
+Get/Change CMM Configuration
+
+#Applications
+Mount/Unmount ISO image
+TPM Provisioning
 
