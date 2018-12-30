@@ -34,9 +34,11 @@ II- System Checks
   1) OOB Support
   sum -c CheckOOBSupport
 
+  #Khai: CheckAssetInfo does not support --file
   2) Asset Information (OOB Only)
   sum -c CheckAssetInfo
   
+   #Khai: CheckSystemUtilization does not support --file
   3) System Utilization (OOB Only + TAS required)
   sum -c CheckSystemUtilization
   
